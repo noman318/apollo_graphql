@@ -9,19 +9,25 @@ const resolvers = {
     },
     async getRecipes(_, { amount }) {
       //   console.log("args_amount", amount);
-      return await Recipe.find().limit(amount);
+      const recipeData = await Recipe.find().limit(amount).populate({
+        path: "userId",
+        model: User,
+      });
+      // console.log("recipeData", recipeData);
+      return recipeData;
     },
   },
   Mutation: {
     async addRecipe(
       _,
-      { recipeInput: { name, description, thumbsDown, thumbsUp } }
+      { recipeInput: { name, description, thumbsDown, thumbsUp, userId } }
     ) {
       const createRecipe = new Recipe({
         name,
         description,
         thumbsDown,
         thumbsUp,
+        userId,
       });
       const res = await createRecipe.save();
       //   console.log("res", res);

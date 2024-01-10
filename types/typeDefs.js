@@ -19,12 +19,13 @@ const typeDefs = `#graphql
     age: Int   
   }
   input RecipeInput {
-    name: String
+    name: String!
     description: String
     thumbsUp: Int
     thumbsDown: Int
+    userId: ID!
   }
-
+  
   type Query{
     recipe(id:ID!):Recipe,
     getRecipes(amount:Int):[Recipe]
